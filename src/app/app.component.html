@@ -1,55 +1,63 @@
-<hello name="{{ name }}"></hello>
+<div class="container">
+  <header>
+    <h1>Sorteador de Duplas</h1>
+  </header>
 
-<div>
-  <h2>Participantes :</h2>
-  <div class="form">
-    <label for="fname">Direita:</label><br />
-    <input type="text" [(ngModel)]="newDireita" />
-    <button (click)="addDireita()">Adiciona Direita</button>
-  </div>
-  <div class="form">
-    <label for="fname">Esquerda:</label><br />
-    <input type="text" [(ngModel)]="newEsquerda" />
-    <button (click)="addEsquerda()">Adiciona Esquerda</button>
-  </div>
-  <div class="side-by-side">
-    <div>
-      <h3>Direitas:</h3>
-      <ul>
-        <li *ngFor="let direita of participantesDireita">
-          {{ direita }}
+  <section class="teams-input">
+    <div class="team-column">
+      <h2>Time Direita</h2>
+      <div class="input-group">
+        <input 
+          type="text" 
+          [(ngModel)]="newDireita" 
+          placeholder="Nome do participante"
+          (keyup.enter)="addDireita()"
+        >
+        <button (click)="addDireita()">Adicionar</button>
+      </div>
+      <ul class="participants-list">
+        <li *ngFor="let participante of participantesDireita">
+          {{ participante }}
         </li>
       </ul>
     </div>
-    <div>
-      <h3>Esquerdas:</h3>
-      <ul>
-        <li *ngFor="let esquerda of participantesEsquerda">
-          {{ esquerda }}
+
+    <div class="team-column">
+      <h2>Time Esquerda</h2>
+      <div class="input-group">
+        <input 
+          type="text" 
+          [(ngModel)]="newEsquerda" 
+          placeholder="Nome do participante"
+          (keyup.enter)="addEsquerda()"
+        >
+        <button (click)="addEsquerda()">Adicionar</button>
+      </div>
+      <ul class="participants-list">
+        <li *ngFor="let participante of participantesEsquerda">
+          {{ participante }}
         </li>
       </ul>
     </div>
-  </div>
+  </section>
 
-  <div class="actions">
-    <button (click)="clear()">Limpar</button>
-    <button
+  <section class="actions">
+    <button 
+      class="primary" 
       (click)="raffle()"
-      [disabled]="
-        participantesDireita.length !== participantesEsquerda.length ||
-        this.duplasSorteadas.length > 0
-      "
+      [disabled]="!participantesDireita.length || !participantesEsquerda.length"
     >
-      Sortear
+      Sortear Duplas
     </button>
-  </div>
+    <button class="secondary" (click)="clear()">Limpar Tudo</button>
+  </section>
 
-  <div *ngIf="duplasSorteadas.length > 0">
-    <h2>Duplas:</h2>
-    <ul>
+  <section class="results" *ngIf="duplasSorteadas.length">
+    <h2>Duplas Sorteadas</h2>
+    <ul class="pairs-list">
       <li *ngFor="let dupla of duplasSorteadas">
         {{ dupla }}
       </li>
     </ul>
-  </div>
+  </section>
 </div>

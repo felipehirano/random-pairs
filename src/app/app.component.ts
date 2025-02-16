@@ -1,109 +1,87 @@
 import { Component } from '@angular/core';
 
+interface Participant {
+  name: string;
+  team: 'direita' | 'esquerda';
+}
+
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  public name = 'desafio';
   public newDireita = '';
   public newEsquerda = '';
+  public duplasSorteadas: string[] = [];
 
-  private _direitas = [];
-  private _esquerdas = [];
-
-  // private _direitas = [
-  //   'Ken',
-  //   'Jojo',
-  //   'Coutinho',
-  //   'Teixeira',
-  //   'Vinao',
-  //   'Tutz',
-  //   'Jp',
-  //   'Dias',
-  // ];
-  // private _esquerdas = [
-  //   'Bileta',
-  //   'Alan',
-  //   'Lemos',
-  //   'Ciro',
-  //   'Monteiro',
-  //   'Guguinha',
-  //   'Caio Manuel',
-  //   'Jonathan',
-  // ];
-
-  public participantesDireita = [];
-  public participantesEsquerda = [];
-
-  // public participantesDireita = [...this._direitas];
-  // public participantesEsquerda = [...this._esquerdas];
-
+  private _direitas: string[] = [];
+  private _esquerdas: string[] = [];
   private _choosedDireita = '';
   private _choosedEsquerda = '';
 
-  public duplasSorteadas = [];
-
-  public raffle() {
-    for (let i = 1; i <= this.participantesDireita.length; i++) {
-      this._choosedDireita =
-        this._direitas[Math.floor(Math.random() * this._direitas.length)];
-
-      if (this._choosedDireita === 'guguinha') {
-        this._choosedEsquerda = 'lemos';
-      } else {
-        this._choosedEsquerda =
-          this._esquerdas[Math.floor(Math.random() * this._esquerdas.length)];
-      }
-
-      this._choosedEsquerda =
-        this._esquerdas[Math.floor(Math.random() * this._esquerdas.length)];
-
-      console.log(
-        `Dupla ${i} - ${this._choosedDireita} e ${this._choosedEsquerda}`
-      );
-
-      this.duplasSorteadas.push(
-        `Dupla ${i} - ${this._choosedDireita} e ${this._choosedEsquerda}`
-      );
-
-      const indexDireitaToBeRemoved = this._direitas.indexOf(
-        this._choosedDireita
-      );
-      const indexEsquerdaToBeRemoved = this._esquerdas.indexOf(
-        this._choosedEsquerda
-      );
-
-      this._direitas.splice(indexDireitaToBeRemoved, 1);
-      this._esquerdas.splice(indexEsquerdaToBeRemoved, 1);
-    }
+  get participantesDireita(): string[] {
+    return [...this._direitas];
   }
 
-  public addDireita() {
-    if (this.newDireita) {
-      this._direitas.push(this.newDireita);
-      this.participantesDireita = [...this._direitas];
+  get participantesEsquerda(): string[] {
+    return [...this._esquerdas];
+  }
 
+  public addDireita(): void {
+    if (this.newDireita.trim()) {
+      this._direitas.push(this.newDireita.trim());
       this.newDireita = '';
     }
   }
 
-  public addEsquerda() {
-    if (this.newEsquerda) {
-      this._esquerdas.push(this.newEsquerda);
-      this.participantesEsquerda = [...this._esquerdas];
-
+  public addEsquerda(): void {
+    if (this.newEsquerda.trim()) {
+      this._esquerdas.push(this.newEsquerda.trim());
       this.newEsquerda = '';
     }
   }
 
-  public clear() {
+  public raffle(): void {
+    this.duplasSorteadas = [];
+    const tempDireitas = [...this._direitas];
+    const tempEsquerdas = [...this._esquerdas];
+
+    for (let i = 1; i <= tempDireitas.length; i++) {
+      const direitaIndex = Math.floor(Math.random() * tempDireitas.length);
+      this._choosedDireita = tempDireitas[direitaIndex];
+      tempDireitas.splice(direitaIndex, 1);
+
+      let esquerdaIndex = Math.floor(Math.random() * tempEsquerdas.length);
+      
+      // Regra especial para o 'guguinha'
+      if (this._choosedDireita.toLowerCase() === 'guguinha') {
+        esquerdaIndex = tempEsquerdas.findIndex(e => e.toLowerCase() === 'lemos');
+        if (esquerdaIndex === -1) {
+          esquerdaIndex = Math.floor(Math.random() * tempEsquerdas.length);
+        }
+      }
+
+      this._choosedEsquerda = tempEsquerdas[esquerdaIndex];
+      tempEsquerdas.splice(esquerdaIndex, 1);
+
+      this.duplasSorteadas.push(
+        `Dupla ${i} - ${this._choosedDireita} e ${this._choosedEsquerda}`
+      );
+    }
+
+    // Limpa os arrays originais após o sorteio
     this._direitas = [];
     this._esquerdas = [];
+    
+    // Limpa os campos de input
+    this.newDireita = '';
+    this.newEsquerda = '';
+  }
 
-    this.participantesDireita = [...this._direitas];
-    this.participantesEsquerda = [...this._esquerdas];
+  public clear(): void {
+    this._direitas = [];
+    this._esquerdas = [];
     this.duplasSorteadas = [];
   }
 }

@@ -1,1 +1,79 @@
-node_modules
+# Dependências
+/node_modules
+/.pnp
+.pnp.js
+yarn.lock
+.npm
+.yarn
+.yarn-integrity
+
+# Arquivos de build/produção
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Arquivos de IDE e editores
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Arquivos de teste
+/coverage
+/test-results
+/cypress/videos/
+/cypress/screenshots/
+
+# Angular específico
+.angular/cache
+.sass-cache/
+connect.lock
+/libpeerconnection.log
+testem.log
+/typings
+
+# Arquivos de configuração local
+*.local
+
+# Arquivos de compilação
+*.tsbuildinfo
+*.js.map
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+# Arquivos de backup
+*.bak
+*.swp
+*~
+
+# Logs
+logs
+*.log
