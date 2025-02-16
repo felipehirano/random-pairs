@@ -1,0 +1,55 @@
+<hello name="{{ name }}"></hello>
+
+<div>
+  <h2>Participantes :</h2>
+  <div class="form">
+    <label for="fname">Direita:</label><br />
+    <input type="text" [(ngModel)]="newDireita" />
+    <button (click)="addDireita()">Adiciona Direita</button>
+  </div>
+  <div class="form">
+    <label for="fname">Esquerda:</label><br />
+    <input type="text" [(ngModel)]="newEsquerda" />
+    <button (click)="addEsquerda()">Adiciona Esquerda</button>
+  </div>
+  <div class="side-by-side">
+    <div>
+      <h3>Direitas:</h3>
+      <ul>
+        <li *ngFor="let direita of participantesDireita">
+          {{ direita }}
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h3>Esquerdas:</h3>
+      <ul>
+        <li *ngFor="let esquerda of participantesEsquerda">
+          {{ esquerda }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button (click)="clear()">Limpar</button>
+    <button
+      (click)="raffle()"
+      [disabled]="
+        participantesDireita.length !== participantesEsquerda.length ||
+        this.duplasSorteadas.length > 0
+      "
+    >
+      Sortear
+    </button>
+  </div>
+
+  <div *ngIf="duplasSorteadas.length > 0">
+    <h2>Duplas:</h2>
+    <ul>
+      <li *ngFor="let dupla of duplasSorteadas">
+        {{ dupla }}
+      </li>
+    </ul>
+  </div>
+</div>
