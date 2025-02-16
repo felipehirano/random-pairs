@@ -13,13 +13,14 @@
   },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "npx ng serve",
+    "build": "npx ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
   "devDependencies": {
+    "@angular/cli": "^13.2.0",
     "@angular/compiler-cli": "^13.2.0",
     "@angular-devkit/build-angular": "~13.2.0",
     "@types/jasmine": "~4.0.0",
