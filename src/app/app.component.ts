@@ -28,6 +28,12 @@ export class AppComponent {
     return [...this._esquerdas];
   }
 
+  get teamsAreBalanced(): boolean {
+    // Habilita apenas quando houver pelo menos um par para sortear
+    // (mesmo número de jogadores em ambos os times e maior que zero)
+    return this._direitas.length === this._esquerdas.length && this._direitas.length > 0;
+  }
+
   public addDireita(): void {
     if (this.newDireita.trim()) {
       this._direitas.push(this.newDireita.trim());
@@ -47,26 +53,29 @@ export class AppComponent {
     const tempDireitas = [...this._direitas];
     const tempEsquerdas = [...this._esquerdas];
 
-    for (let i = 1; i <= tempDireitas.length; i++) {
+    while (tempDireitas.length > 0 && tempEsquerdas.length > 0) {
+      // Sorteia um jogador da direita
       const direitaIndex = Math.floor(Math.random() * tempDireitas.length);
-      this._choosedDireita = tempDireitas[direitaIndex];
+      const jogadorDireita = tempDireitas[direitaIndex];
       tempDireitas.splice(direitaIndex, 1);
 
+      // Sorteia um jogador da esquerda
       let esquerdaIndex = Math.floor(Math.random() * tempEsquerdas.length);
       
       // Regra especial para o 'guguinha'
-      if (this._choosedDireita.toLowerCase() === 'guguinha') {
+      if (jogadorDireita.toLowerCase() === 'guguinha') {
         esquerdaIndex = tempEsquerdas.findIndex(e => e.toLowerCase() === 'lemos');
         if (esquerdaIndex === -1) {
           esquerdaIndex = Math.floor(Math.random() * tempEsquerdas.length);
         }
       }
 
-      this._choosedEsquerda = tempEsquerdas[esquerdaIndex];
+      const jogadorEsquerda = tempEsquerdas[esquerdaIndex];
       tempEsquerdas.splice(esquerdaIndex, 1);
 
+      // Adiciona a dupla sorteada
       this.duplasSorteadas.push(
-        `Dupla ${i} - ${this._choosedDireita} e ${this._choosedEsquerda}`
+        `Dupla ${this.duplasSorteadas.length + 1} - ${jogadorDireita} e ${jogadorEsquerda}`
       );
     }
 

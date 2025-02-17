@@ -45,7 +45,7 @@
     <button 
       class="primary" 
       (click)="raffle()"
-      [disabled]="!participantesDireita.length || !participantesEsquerda.length"
+      [disabled]="!teamsAreBalanced"
     >
       Sortear Duplas
     </button>
