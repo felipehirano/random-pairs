@@ -36,16 +36,44 @@ export class AppComponent {
 
   public addDireita(): void {
     if (this.newDireita.trim()) {
-      this._direitas.push(this.newDireita.trim());
+      // Processa múltiplos nomes separados por vírgula ou quebra de linha
+      const nomes = this.processMultipleNames(this.newDireita);
+      nomes.forEach(nome => {
+        if (nome && !this._direitas.includes(nome)) {
+          this._direitas.push(nome);
+        }
+      });
       this.newDireita = '';
     }
   }
 
   public addEsquerda(): void {
     if (this.newEsquerda.trim()) {
-      this._esquerdas.push(this.newEsquerda.trim());
+      // Processa múltiplos nomes separados por vírgula ou quebra de linha
+      const nomes = this.processMultipleNames(this.newEsquerda);
+      nomes.forEach(nome => {
+        if (nome && !this._esquerdas.includes(nome)) {
+          this._esquerdas.push(nome);
+        }
+      });
       this.newEsquerda = '';
     }
+  }
+
+  public removeDireita(index: number): void {
+    this._direitas.splice(index, 1);
+  }
+
+  public removeEsquerda(index: number): void {
+    this._esquerdas.splice(index, 1);
+  }
+
+  private processMultipleNames(input: string): string[] {
+    // Divide por vírgula ou quebra de linha, remove espaços extras e filtra vazios
+    return input
+      .split(/[,\n]/)
+      .map(nome => nome.trim())
+      .filter(nome => nome.length > 0);
   }
 
   public raffle(): void {

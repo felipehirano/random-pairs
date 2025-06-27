@@ -7,17 +7,18 @@
     <div class="team-column">
       <h2>Direita</h2>
       <div class="input-group">
-        <input 
-          type="text" 
+        <textarea 
           [(ngModel)]="newDireita" 
-          placeholder="Nome do participante"
+          placeholder="Digite os nomes separados por vírgula ou quebra de linha"
+          rows="4"
           (keyup.enter)="addDireita()"
-        >
+        ></textarea>
         <button (click)="addDireita()">Adicionar</button>
       </div>
       <ul class="participants-list">
-        <li *ngFor="let participante of participantesDireita">
+        <li *ngFor="let participante of participantesDireita; let i = index">
           {{ participante }}
+          <button class="remove-btn" (click)="removeDireita(i)">×</button>
         </li>
       </ul>
     </div>
@@ -25,17 +26,18 @@
     <div class="team-column">
       <h2>Esquerda</h2>
       <div class="input-group">
-        <input 
-          type="text" 
+        <textarea 
           [(ngModel)]="newEsquerda" 
-          placeholder="Nome do participante"
+          placeholder="Digite os nomes separados por vírgula ou quebra de linha"
+          rows="4"
           (keyup.enter)="addEsquerda()"
-        >
+        ></textarea>
         <button (click)="addEsquerda()">Adicionar</button>
       </div>
       <ul class="participants-list">
-        <li *ngFor="let participante of participantesEsquerda">
+        <li *ngFor="let participante of participantesEsquerda; let i = index">
           {{ participante }}
+          <button class="remove-btn" (click)="removeEsquerda(i)">×</button>
         </li>
       </ul>
     </div>

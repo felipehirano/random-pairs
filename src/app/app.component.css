@@ -56,14 +56,21 @@ h2 {
   display: flex;
   gap: 0.5rem;
   margin-bottom: 1rem;
+  align-items: flex-start;
 }
 
-input {
+input, textarea {
   flex: 1;
   padding: 0.5rem;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+}
+
+textarea {
+  min-height: 100px;
 }
 
 button {
@@ -97,6 +104,26 @@ button.secondary:hover {
   background-color: #c0392b;
 }
 
+.remove-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.remove-btn:hover {
+  background-color: #c0392b;
+}
+
 .participants-list {
   list-style: none;
   padding: 0;
@@ -108,6 +135,9 @@ button.secondary:hover {
   margin-bottom: 0.5rem;
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .actions {
